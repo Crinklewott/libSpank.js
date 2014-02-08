@@ -72,6 +72,8 @@ var Spankee = (function(){
 	pain += (100 / protection) * implement.force * (10 / lastSwat);
 	lastSwat = 1;
 
+	if(implement.callback)
+	    implement.callback();
 	if(callback)
 	    return callback(getReaction());
 	return getReaction();
@@ -88,11 +90,14 @@ var Spankee = (function(){
     return Spankee;
 })();
 
-var Implement = function(name, force, weight){
+var Implement = function(name, force, weight, callback){
     this.name = name;
     this.force = force;
     this.weight = weight;
+    this.callback = callback;
 };
 
-var hairbrush = new Implement("Hairbrush", 2, 1);
+var hairbrush = new Implement("Hairbrush", 2, 1, function(){
+    output("THWACK!");
+});
 var spankee = new Spankee();
