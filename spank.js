@@ -67,9 +67,10 @@ var Spankee = (function(){
 
     this.lastSwat = 1;
     this.timer = setInterval(function(){
-      if(Math.random() < (lastSwat++ / toler) + ((this.pain / toler) / toler))
-	this.pain = --this.pain < 0 ? 0 : this.pain;
-    }.bind(this), 100);
+      if(Math.random() < (++this.lastSwat/this.toler) +
+	 ((this.pain/this.toler)/this.toler))
+	this.pain = Math.floor(this.pain * 0.992);
+    }.bind(this), 50);
 
     /**
      * Internal function to get the reaction of the spankee from the
@@ -114,7 +115,10 @@ var Spankee = (function(){
     if(!impl instanceof Implement)
       throw new "You can't spank with that!";
 
-    this.pain += (100 / this.protection) * impl.sting * (10 / this.lastSwat);
+    this.pain += Math.floor((Math.pow(impl.sting, impl.weight) +
+			   (this.pain / 10 + 1 / this.lastSwat))
+			  - (100 - (this.protection * 10)));
+
     this.lastSwat = 1;
 
     if(impl.callback)
