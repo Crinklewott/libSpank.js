@@ -67,10 +67,11 @@ var Spankee = (function(){
 
     this.lastSwat = 1;
     this.timer = setInterval(function(){
-      if(Math.random() < (++this.lastSwat/this.toler) +
-	 ((this.pain/this.toler)/this.toler))
-	this.pain = Math.floor(this.pain * 0.992);
-    }.bind(this), 50);
+      var relief = Math.floor(
+	((this.pain * 0.992) + -((this.pain < 1 ? 1 : this.pain) /
+				 this.toler)));
+      this.pain = relief < 0 ? 0 : relief;
+    }.bind(this), 250);
 
     /**
      * Internal function to get the reaction of the spankee from the
@@ -117,7 +118,8 @@ var Spankee = (function(){
 
     this.pain += Math.floor((Math.pow(impl.sting, impl.weight) +
 			   (this.pain / 10 + 1 / this.lastSwat))
-			  - (100 - (this.protection * 10)));
+			  - (100 - (this.protection * 10)) +
+			    10 * impl.sting);
 
     this.lastSwat = 1;
 
