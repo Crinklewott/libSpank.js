@@ -6,6 +6,25 @@
 // Default output, console.log exists both in a browser and in Node.js
 var output = console.log;
 
+/**
+ * The Spanking Implement constructor
+ * This constructor allows you to construct spanking implements for
+ * use with the Spankee.prototype.spank() function.
+ * @param name <String>: The name of the implement.
+ * @param sting <Number>: How much does this implement sting when not
+ * considering its weight. (Eg: A heavy paddle doesn't sting as much
+ * as a cane)
+ * @param weight <Number>: How heavy is this implement?
+ * @param callback <Function> optional: The function that will be
+ * called when this implement is used.
+ */
+var Implement = function(name, sting, weight, callback){
+  this.name = name;
+  this.sting = sting;
+  this.weight = weight;
+  this.callback = callback;
+};
+
 var Spankee = (function(){
   var reactions,
       pain       = 0,    // The current level of pain
@@ -26,46 +45,54 @@ var Spankee = (function(){
    * @param spec <Object>: Accepts an object with the desired
    * paramaters for the spankee. The arguments of the spec object
    * are as follows:
-   *   spec.tolerance - A numerical tolerance value, tolerance makes
-   *                    spankees able to take more spanking with
-   *                    less intense reactions. (Default: 1000)
-   *   spec.reactions - An array of arrays, the outer array holds,
-   *                    in intensity order, the arrays of reactions
-   *                    that a spankee will give when spanked.
-   *   spec.callback  - A function that will be called with the
-   *                    current reaction.
+   *   spec.tolerance  - A numerical tolerance value, tolerance makes
+   *                     spankees able to take more spanking with
+   *                     less intense reactions. (Default: 1000)
+   *   spec.protection - A numerical value of how much protection the
+   *                     spankee has on their butt.
+   *   spec.reactions  - An array of arrays, the outer array holds,
+   *                     in intensity order, the arrays of reactions
+   *                     that a spankee will give when spanked.
+   *   spec.pain       - The starting-out soreness level.
+   *   spec.callback   - A function that will be called with the
+   *                     current reaction.
    */
   function Spankee(spec){
-    spec = spec || {};
-    toler = spec.tolerance || toler;
-    callback = spec.callback || false;
-    reactions = spec.reactions || [["Ouch!"]];
+    this.spec = spec || {};
+    this.toler = this.spec.tolerance || toler;
+    this.callback = this.spec.callback || false;
+    this.reactions = this.spec.reactions || [["Ouch!"]];
+    this.protection = this.spec.protection || protection;
+    this.pain = this.spec.pain || pain;
 
-    timer = setInterval(function(){
-      if(Math.random() < (lastSwat++ / toler) + ((pain / toler) / toler))
-	pain--;
-    }, 100);
-  }
+    this.lastSwat = 1;
+    this.timer = setInterval(function(){
+      if(Math.random() < (lastSwat++ / toler) + ((this.pain / toler) / toler))
+	this.pain = --this.pain < 0 ? 0 : this.pain;
+    }.bind(this), 100);
 
-  /**
-   * Internal function to get the reaction of the spankee from the
-   * reactions array.
-   * @returns the reaction from the nested reaction array based on the
-   * RNG as well as the current pain level.
-   */
-  function getReaction(){
-    var level = Math.floor(pain/toler) + (
-      Math.random() < 0.1 ? (Math.random() < 0.3 ? -1 : 1) : 0
-    );
+    /**
+     * Internal function to get the reaction of the spankee from the
+     * reactions array.
+     * @returns the reaction from the nested reaction array based on the
+     * RNG as well as the current pain level.
+     */
+    this.getReaction = function(){
+      var level = Math.floor(this.pain/this.toler) + (
+	Math.random() < 0.1 ? (Math.random() < 0.3 ? -1 : 1) : 0
+      );
 
-    return reactions[
-      level < reactions.length ? Math.abs(level) : reactions.length - 1
-    ][
-      Math.floor(Math.random() * reactions[
-	level < reactions.length ?
-	  Math.abs(level) : reactions.length - 1
-      ].length)
-    ];
+      return this.reactions[
+	level < this.reactions.length ?
+	  Math.abs(level) :
+	  this.reactions.length - 1
+      ][
+	Math.floor(Math.random() * this.reactions[
+	  level < this.reactions.length ?
+	    Math.abs(level) : this.reactions.length - 1
+	].length)
+      ];
+    };
   }
 
   /**
@@ -77,25 +104,25 @@ var Spankee = (function(){
    * of pain given... And if there is a delay, the spankee's pain goes
    * down.
    *
-   * @param implement <Implement> optional: You pass in an instance of
+   * @param impl <Implement> optional: You pass in an instance of
    * implement you wish to spank the spankee with. If no implement is
    * defined, hand is used.
    */
-  Spankee.prototype.spank = function(implement){
-    if(implement == undefined)
-      implement = hand;
-    if(!implement instanceof Implement)
+  Spankee.prototype.spank = function(impl){
+    if(impl == undefined)
+      impl = hand;
+    if(!impl instanceof Implement)
       throw new "You can't spank with that!";
 
-    pain += (100 / protection) * implement.sting * (10 / lastSwat);
-    lastSwat = 1;
+    this.pain += (100 / this.protection) * impl.sting * (10 / this.lastSwat);
+    this.lastSwat = 1;
 
-    if(implement.callback)
-      implement.callback();
+    if(impl.callback)
+      impl.callback();
 
-    if(callback)
-      return callback(getReaction());
-    return getReaction();
+    if(this.callback)
+      return this.callback(this.getReaction());
+    return this.getReaction();
   };
 
   /**
@@ -107,35 +134,17 @@ var Spankee = (function(){
    * @returns the new portection value.
    */
   Spankee.prototype.removeProtection = function(amount){
-    if(amount) return protection =- amount;
-    return protection--;
+    if(amount) return this.protection =- amount;
+    return --this.protection;
   };
 
   /**
    * Stops any sense of time in this world.
    */
   Spankee.prototype.stopTimer = function(){
-    return clearInterval(timer);
+    return clearInterval(this.timer);
   };
 
   return Spankee;
 })();
 
-/**
- * The Spanking Implement constructor
- * This constructor allows you to construct spanking implements for
- * use with the Spankee.prototype.spank() function.
- * @param name <String>: The name of the implement.
- * @param sting <Number>: How much does this implement sting when not
- * considering its weight. (Eg: A heavy paddle doesn't sting as much
- * as a cane)
- * @param weight <Number>: How heavy is this implement?
- * @param callback <Function> optional: The function that will be
- * called when this implement is used.
- */
-var Implement = function(name, sting, weight, callback){
-  this.name = name;
-  this.sting = sting;
-  this.weight = weight;
-  this.callback = callback;
-};
