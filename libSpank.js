@@ -33,7 +33,7 @@ var Spankee = (function(){
       toler      = 1000, // The pain tolerance of the spankee
       callback,          // Will be called with each swat's reaction
       timer,             // Timer object for temporal judgement
-      hand = new Implement("Hand", 1, 1, function(){ // Default implement
+      hand = new Implement("Hand", 5, 1, function(){ // Default implement
 	output("SLAP!");
       });
 
@@ -68,8 +68,8 @@ var Spankee = (function(){
     this.lastSwat = 1;
     this.timer = setInterval(function(){
       var relief = Math.floor(
-	((this.pain * 0.992) + -((this.pain < 1 ? 1 : this.pain) /
-				 this.toler)));
+	  ((this.pain * 0.9991) +
+	   -((this.pain < 1 ? 1 : this.pain) / this.toler)/2));
       this.pain = relief < 0 ? 0 : relief;
     }.bind(this), 250);
 
@@ -116,10 +116,10 @@ var Spankee = (function(){
     if(!impl instanceof Implement)
       throw new "You can't spank with that!";
 
-    this.pain += Math.floor((Math.pow(impl.sting, impl.weight) +
-			   (this.pain / 10 + 1 / this.lastSwat))
+    this.pain += Math.floor((Math.pow(impl.sting/10, impl.weight) +
+			   (1 / this.lastSwat))
 			  - (100 - (this.protection * 10)) +
-			    10 * impl.sting);
+			    10 * impl.sting/10);
 
     this.lastSwat = 1;
 
