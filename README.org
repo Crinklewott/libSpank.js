@@ -1,0 +1,186 @@
+* libSpank.js
+
+libSpank.js is a spanking simulation library designed to handle the
+back-end (Har har) management of implementing spanking into a sim.
+
+* Features
+- Custom Implement and Spankee object creation.
+- A timer; spankings hurt more the faster they are... Also waiting
+  makes a spankee less sore.
+- Public members to give you the status of both Spankees and
+  Implements.
+- Callbacks so you can trigger your own code when using specific
+  implements, or when a spankee gets spanked.
+
+* Usage
+libSpank has two publicly accessible constructor functions, a
+=Spankee= constructor, as well as an =Implement= constructor. Only a
+=Spankee= is mandatory to use the library however.
+
+** The Spankee Function
+This Constructor Function creates objects that represent a
+spankee. Spankees start out with a default of no pain, 10 protection,
+and 1000 tolerance.
+
+This would be about the average object for someone with a medium
+pain-tolerance wearing a bathing suit, or some such light clothing.
+
+*** Spankee parameters
+You can pass in a =spec= Object when invoking the constructor to pass
+in your own values for these stats, as well as pass in a callback that
+is called whenever the spankee gets spanked. This is also where you
+define the reactions for a spankee.
+
+The spec object can have any of the following parameters:
+
+**** tolerance
+The pain tolerance of the spankee. 100 is a low tolerance that would
+only take a few sturdy smacks to start to bring tears, whereas
+750-1000 is probably about average... 2000+ is very likely the level
+most spankos have.
+
+Having a high pain tolerance is not necessarily a good thing for the
+spankee though, because it means that the pain that they get will
+linger longer because simply, there is much more of it.
+
+**** pain
+The starting out pain... Directly linked to the Spankee's pain
+tolerance...
+
+As the pain level grows greater than a spankees pain tolerance, you
+will start to notice a change in the way a spankee reacts when you
+spank them.
+
+Pain decreases at a swifter rate the higher it is... So sharp pain
+will dissipate quicker than long-lasting soreness.
+
+**** protection
+However much protection the spankee has over their butt...
+
+10, the default, is relatively light protection that decreases a
+spanking's pain by a few points. Jeans would be around 50, naked would
+be 0, and doing things like putting water on the butt could drop it to
+a negative number even!
+
+**** reactions
+This should be an array of arrays...
+
+The outer array is selected based on the number of times a spankee has
+gone over their tolerance... So if a spankee has a tolerance of 250,
+and their pain is 500, this would select either the second array
+value, and sometimes the first.
+
+The inner arrays are values to pick between randomly when that array
+has been selected for a reaction.
+
+As a spankee is spanked, they will continue to give reactions from
+later and later in the outer array.
+
+These reactions are passed to the Spankee callback and can be of any
+type... If there is no callback on the spankee, then the value will be
+returned from the =Spankee.prototype.spank()= function.
+
+**** callback
+The callback for a spankee is called whenever that particular spankee
+gets spanked. The value from the reaction arrays (As described above)
+is passed in as the first parameter of the callback.
+
+*** Spankee fields
+At any point in time, you can inspect the fields in the Spankee object
+to see how the spankee is doing...
+
+You can also reassign these values to change how a spankee is doing,
+or how they will react to further spanking. (Any state, really.)
+
+The fields accessible from the Spankee object are:
+
+**** spec
+The passed in spec arguments you used to create the Spankee... You can
+use this to clone a Spankee's original state before you started
+spanking them...
+
+**** toler
+The tolerance of the spankee...
+
+**** callback
+The function that will be called when the spankee is spanked.
+
+**** reactions
+The reaction array that a Spankee will use as a repertoire when
+spanked.
+
+**** protection
+The amount of protection the spankee currently has.
+
+**** pain
+How sore is the spankee?
+
+**** lastSwat
+How many ticks ago was the last smack?
+
+**** timer
+The timer object that controls the Spankee's sense of time and
+recovery...
+
+*** Spankee functions
+And finally, here are the functions you can call on a Spankee...
+
+*** spank()
+Spank the Spankee with your hand... The hand is a default implement
+that has 5 sting and 1 weight.
+
+*** spank(Implement)
+Spank the Spankee with the passed in Implement. (Implements are
+described below)
+
+*** getReaction()
+This function is called by spank(), but if you need a reaction for the
+Spankee's current pain without spanking them, this is how you would
+get it.
+
+*** removeProtection()
+Removes 1 protection from the spankee...
+
+*** removeProtection(Integer)
+Removes the amount of protection passed in, making spankee's more
+susceptible to spanking pain.
+
+*** stopTimer()
+Stops the Spankee object from recovering or noticing delay between
+spankings... Mostly used for snapshotting state.
+
+** The Implement Function
+Now that we have Spankees, we need something to spank them with!
+
+Implements are objects that carry a certain amount of sting when used
+to spank a Spankee, and are of a certain weight...
+
+Implement sting increases the pain caused by spanking with it a
+little, but the weight of an implement increases sting
+exponentially. So a light and very stingy implement like a cane will
+hurt almost as much as a slightly less stingy implement that is much
+heavier like a paddle.
+
+An implement is just created by passing in the following values:
+
+*** Name
+The name of the implement, not important internally so you can call it
+anything... "Hairbrush", "Slipper", "Hand of destiny", anything works
+here.
+
+*** Sting
+How much the implement stings... *Not* how much it hurts, but rather
+how much it would sting if it was the weight of a hairbrush.
+
+*** Weight
+How heavy the implement is... Since this library assumes that you are
+spanking at the same speed, this will increase pain a LOT if there is
+a high sting value, and not as much if the sting is low to start out
+with.
+
+*** Callback
+The function that will be called when this implement is used to spank
+a spankee...
+
+It's optional, but it's also the only way to run code when spanking
+with a particular implement.
