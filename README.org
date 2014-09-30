@@ -18,12 +18,13 @@ libSpank has two publicly accessible constructor functions, a
 =Spankee= is mandatory to use the library however.
 
 ** The Spankee Function
-This Constructor Function creates objects that represent a
+This Constructor Function creates objects that represents a
 spankee. Spankees start out with a default of no pain, 10 protection,
 and 1000 tolerance.
 
-This would be about the average object for someone with a medium
-pain-tolerance wearing a bathing suit, or some such light clothing.
+This would be about the average configuration for someone with a medium
+pain-tolerance wearing underwear and jeans, or some other equivalent
+clothing.
 
 *** Spankee parameters
 You can pass in a =spec= Object when invoking the constructor to pass
@@ -34,14 +35,15 @@ define the reactions for a spankee.
 The spec object can have any of the following parameters:
 
 **** tolerance
-The pain tolerance of the spankee. 100 is a low tolerance that would
-only take a few sturdy smacks to start to bring tears, whereas
-750-1000 is probably about average... 2000+ is very likely the level
-most spankos have.
+The pain =tolerance= of the =Spankee=. 100 is a low =tolerance=; it
+would only take a few sturdy smacks bring them over their pain
+tolerance and to tears... 750-1000 is probably about average... And
+2000+ is very likely the level most spankos have. (Quite high!)
 
 Having a high pain tolerance is not necessarily a good thing for the
-spankee though, because it means that the pain that they get will
-linger longer because simply, there is much more of it.
+spankee though, because it means that a spanking's pain will linger
+longer than it would for other Spankees because there is simply much
+more of it.
 
 **** pain
 The starting out pain... Directly linked to the Spankee's pain
@@ -52,15 +54,19 @@ will start to notice a change in the way a spankee reacts when you
 spank them.
 
 Pain decreases at a swifter rate the higher it is... So sharp pain
-will dissipate quicker than long-lasting soreness.
+will dissipate quicker than long-lasting soreness. Small amounts of
+pain will linger longer but are far less intense.
 
 **** protection
-However much protection the spankee has over their butt...
+This value replresents how much protection the spankee has over their
+butt...
 
-10, the default, is relatively light protection that decreases a
-spanking's pain by a few points. Jeans would be around 50, naked would
-be 0, and doing things like putting water on the butt could drop it to
-a negative number even!
+10, the default, is medium protection that decreases a spanking's pain
+by a few points; about equivalent to if the Spankee was being spanked
+over Jeans. 0 would be if the Spankee was completely naked (Duh! Sinse
+it's zero protection) and doing things like putting water on the
+Spankee's butt could drop it to a negative number even if they started
+out naked!
 
 **** reactions
 This should be an array of arrays...
@@ -100,27 +106,40 @@ use this to clone a Spankee's original state before you started
 spanking them...
 
 **** toler
-The tolerance of the spankee...
+The tolerance of the spankee as described above...
 
 **** callback
 The function that will be called when the spankee is spanked.
 
+This function is called with the Spankee's reaction.
+
 **** reactions
-The reaction array that a Spankee will use as a repertoire when
-spanked.
+The reaction array that a Spankee will have as a repertoire when
+they are being spanked.
 
 **** protection
 The amount of protection the spankee currently has.
 
+Apporixmate values of protection are:
+
+10 == Jeans
+2  == Underwear
+0  == Naked
+-2 == Wet, naked bottom
+
 **** pain
-How sore is the spankee?
+How sore is the spankee? This value increases as they are spanked,
+and decreases if you stop.
 
 **** lastSwat
-How many ticks ago was the last smack?
+How many ticks ago was the last smack? The less time, the more intense
+the next spank is...
 
 **** timer
 The timer object that controls the Spankee's sense of time and
 recovery...
+
+Without it, the Spankee does not heal.
 
 *** Spankee functions
 And finally, here are the functions you can call on a Spankee...
@@ -158,25 +177,31 @@ to spank a Spankee, and are of a certain weight...
 Implement sting increases the pain caused by spanking with it a
 little, but the weight of an implement increases sting
 exponentially. So a light and very stingy implement like a cane will
-hurt almost as much as a slightly less stingy implement that is much
-heavier like a paddle.
+hurt almost as much as a far less stingy implement that is much
+heavier...like a sturdy frat paddle.
 
 An implement is just created by passing in the following values:
 
 *** Name
-The name of the implement, not important internally so you can call it
-anything... "Hairbrush", "Slipper", "Hand of destiny", anything works
-here.
+The name of the implement... This value is not important internally so
+you can call it anything... "Hairbrush", "Slipper", "Hand of destiny",
+anything works here.
 
 *** Sting
 How much the implement stings... *Not* how much it hurts, but rather
 how much it would sting if it was the weight of a hairbrush.
+
+So something "whippy" like a cane, would have a high sting... Whereas
+something more blunt, like your hand, would have a much lower sting.
 
 *** Weight
 How heavy the implement is... Since this library assumes that you are
 spanking at the same speed, this will increase pain a LOT if there is
 a high sting value, and not as much if the sting is low to start out
 with.
+
+A hairbrush would be an example of a light implement, and a wooden
+paddle would be an example of a heavy one.
 
 *** Callback
 The function that will be called when this implement is used to spank
