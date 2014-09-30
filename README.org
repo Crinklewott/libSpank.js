@@ -153,7 +153,7 @@ And finally, here are the functions you can call on a =Spankee=...
 
 *** spank()
 Spank the =Spankee= with your =Hand=... The =Hand= is a default
-implement for hand-spanking that has 5 sting and 1 weight.
+implement for hand-spanking that has 5 =sting= and 1 =weight=.
 
 *** spank(Implement)
 Spank the =Spankee= with the passed in =Implement=. (Implements are
