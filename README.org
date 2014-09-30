@@ -37,98 +37,105 @@ The spec object can have any of the following parameters:
 **** tolerance
 The pain =tolerance= of the =Spankee=. 100 is a low =tolerance=; it
 would only take a few sturdy smacks bring them over their pain
-tolerance and to tears... 750-1000 is probably about average... And
+=tolerance= and to tears... 750-1000 is probably about average... And
 2000+ is very likely the level most spankos have. (Quite high!)
 
-Having a high pain tolerance is not necessarily a good thing for the
-spankee though, because it means that a spanking's pain will linger
+Having a high pain =tolerance= is not necessarily a good thing for the
+=Spankee= though, because it means that a spanking's pain will linger
 longer than it would for other Spankees because there is simply much
 more of it.
 
 **** pain
-The starting out pain... Directly linked to the Spankee's pain
-tolerance...
+The starting out =pain=... Directly linked to the Spankee's pain
+=tolerance=...
 
-As the pain level grows greater than a spankees pain tolerance, you
-will start to notice a change in the way a spankee reacts when you
+As the =pain= level grows greater than a spankees pain =tolerance=,
+you will start to notice a change in the way a spankee reacts when you
 spank them.
 
-Pain decreases at a swifter rate the higher it is... So sharp pain
+Pain decreases at a swifter rate the higher it is... So sharp =pain=
 will dissipate quicker than long-lasting soreness. Small amounts of
-pain will linger longer but are far less intense.
+=pain= will linger longer but are far less intense.
 
 **** protection
-This value replresents how much protection the spankee has over their
-butt...
+This value replresents how much =protection= the =Spankee= has over
+their butt...
 
-10, the default, is medium protection that decreases a spanking's pain
-by a few points; about equivalent to if the Spankee was being spanked
-over Jeans. 0 would be if the Spankee was completely naked (Duh! Sinse
-it's zero protection) and doing things like putting water on the
-Spankee's butt could drop it to a negative number even if they started
-out naked!
+10, the default, is medium =protection= that decreases a spanking's
+=pain= by a few points; about equivalent to if the =Spankee= was being
+spanked with jeans on. 0 would be if the =Spankee= was completely
+naked (Duh! Sinse it's zero =protection=) and doing things like
+putting water on the Spankee's butt could drop it to a negative number
+even if they started out naked!
 
 **** reactions
 This should be an array of arrays...
 
-The outer array is selected based on the number of times a spankee has
-gone over their tolerance... So if a spankee has a tolerance of 250,
-and their pain is 500, this would select either the second array
-value, and sometimes the first.
+The outer array is selected based on the number of times a =Spankee=
+has gone over their =tolerance=... So if a =Spankee= has a =tolerance=
+of 250, and their =pain= is 500, this would usually select a value
+from the second array value. (Though sometimes the first.)
 
 The inner arrays are values to pick between randomly when that array
-has been selected for a reaction.
+has been selected for a =reaction=.
 
-As a spankee is spanked, they will continue to give reactions from
+As a =Spankee= is spanked, they will continue to give =reactions= from
 later and later in the outer array.
 
-These reactions are passed to the Spankee callback and can be of any
-type... If there is no callback on the spankee, then the value will be
-returned from the =Spankee.prototype.spank()= function.
+These =reactions= are passed to the =Spankee= =callback= and can be of
+any type... If there is no =callback= on the =Spankee=, then the value
+will be returned from the =Spankee.prototype.spank()= function.
 
 **** callback
-The callback for a spankee is called whenever that particular spankee
-gets spanked. The value from the reaction arrays (As described above)
-is passed in as the first parameter of the callback.
+The =callback= for a =Spankee= is called whenever that particular
+=Spankee= gets spanked. The value from the =reactions= arrays (As
+described above) is passed in as the first parameter of the =callback=.
 
 *** Spankee fields
-At any point in time, you can inspect the fields in the Spankee object
-to see how the spankee is doing...
+At any point in time, you can inspect the fields in the =Spankee=
+object to see how the =Spankee= is doing...
 
-You can also reassign these values to change how a spankee is doing,
-or how they will react to further spanking. (Any state, really.)
+Also, if you feel like enacting some wizardry, you can reassign these
+values to change how a =Spankee= is doing, how they will react to
+further spanking, or change any state, really...
 
-The fields accessible from the Spankee object are:
+The fields accessible from the =Spankee= object are:
 
 **** spec
-The passed in spec arguments you used to create the Spankee... You can
-use this to clone a Spankee's original state before you started
+The passed in =spec= arguments you used to create the =Spankee=... You
+can use this to clone a Spankee's original state before you started
 spanking them...
 
 **** toler
-The tolerance of the spankee as described above...
+The =tolerance= of the =Spankee= as described above...
 
 **** callback
-The function that will be called when the spankee is spanked.
+The function that will be called when the =Spankee= is spanked.
 
-This function is called with the Spankee's reaction.
+This function is called with the Spankee's reaction from the
+=reactions= array.
 
 **** reactions
-The reaction array that a Spankee will have as a repertoire when
+The =reactions= array that a =Spankee= will have as a repertoire when
 they are being spanked.
 
 **** protection
-The amount of protection the spankee currently has.
+The amount of =protection= the =Spankee= currently has.
 
 Apporixmate values of protection are:
 
-10 == Jeans
-2  == Underwear
-0  == Naked
--2 == Wet, naked bottom
+| Protection | Clothing          |
+|------------+-------------------|
+|         10 | Jeans             |
+|          2 | Underwear         |
+|          0 | Naked             |
+|         -2 | Wet, naked bottom |
+
+You can use this scale to extrapolate other =protection= values of
+your own.
 
 **** pain
-How sore is the spankee? This value increases as they are spanked,
+How sore is the =Spankee=? This value increases as they are spanked,
 and decreases if you stop.
 
 **** lastSwat
@@ -139,73 +146,75 @@ the next spank is...
 The timer object that controls the Spankee's sense of time and
 recovery...
 
-Without it, the Spankee does not heal.
+Without it, the =Spankee= does not heal.
 
 *** Spankee functions
-And finally, here are the functions you can call on a Spankee...
+And finally, here are the functions you can call on a =Spankee=...
 
 *** spank()
-Spank the Spankee with your hand... The hand is a default implement
-that has 5 sting and 1 weight.
+Spank the =Spankee= with your =Hand=... The =Hand= is a default
+implement for hand-spanking that has 5 sting and 1 weight.
 
 *** spank(Implement)
-Spank the Spankee with the passed in Implement. (Implements are
+Spank the =Spankee= with the passed in =Implement=. (Implements are
 described below)
 
 *** getReaction()
-This function is called by spank(), but if you need a reaction for the
-Spankee's current pain without spanking them, this is how you would
-get it.
+This function is called by =spank()=, but if you need a reaction for
+the Spankee's current =pain= without spanking them, this is how you
+would get it.
 
 *** removeProtection()
-Removes 1 protection from the spankee...
+Removes 1 =protection= from the =Spankee=...
 
 *** removeProtection(Integer)
-Removes the amount of protection passed in, making spankee's more
+Removes the amount of =protection= passed in, making =Spankee= more
 susceptible to spanking pain.
 
 *** stopTimer()
-Stops the Spankee object from recovering or noticing delay between
+Stops the =Spankee= object from recovering or noticing delay between
 spankings... Mostly used for snapshotting state.
 
 ** The Implement Function
 Now that we have Spankees, we need something to spank them with!
 
-Implements are objects that carry a certain amount of sting when used
-to spank a Spankee, and are of a certain weight...
+Implements are objects that carry a certain amount of =sting= when
+used to spank a =Spankee=, and are of a certain =weight=...
 
-Implement sting increases the pain caused by spanking with it a
-little, but the weight of an implement increases sting
-exponentially. So a light and very stingy implement like a cane will
-hurt almost as much as a far less stingy implement that is much
+=Implement= =sting= increases the =pain= caused by spanking with it a
+little, but the =weight= of an =Implement= increases =sting=
+exponentially. So a light and very stingy =Implement= like a cane will
+hurt almost as much as a far less stingy =Implement= that is much
 heavier...like a sturdy frat paddle.
 
-An implement is just created by passing in the following values:
+An =Implement= can be created by passing in the following values:
 
 *** Name
-The name of the implement... This value is not important internally so
-you can call it anything... "Hairbrush", "Slipper", "Hand of destiny",
-anything works here.
+The =name= of the =Implement=... This value is not important
+internally so you can call it anything... "Hairbrush", "Slipper",
+"Hand of destiny", anything works here.
 
 *** Sting
 How much the implement stings... *Not* how much it hurts, but rather
-how much it would sting if it was the weight of a hairbrush.
+how much it would =sting= if it was the =weight= of a hairbrush. (With
+a hairbrush having a sting of 15 and a wight of 2)
 
-So something "whippy" like a cane, would have a high sting... Whereas
-something more blunt, like your hand, would have a much lower sting.
+So something "whippy" like a cane, would have a high
+=sting=... Whereas something more blunt, like your hand, would have a
+much lower =sting=.
 
 *** Weight
-How heavy the implement is... Since this library assumes that you are
-spanking at the same speed, this will increase pain a LOT if there is
-a high sting value, and not as much if the sting is low to start out
-with.
+How heavy the =Implement= is... Since this library assumes that you
+are spanking at the same speed, this will increase =pain= a LOT if
+there is a high =sting= value, and not as much if the =stin=g is low
+to start out with.
 
-A hairbrush would be an example of a light implement, and a wooden
+A hairbrush would be an example of a light =Implement=, and a wooden
 paddle would be an example of a heavy one.
 
 *** Callback
-The function that will be called when this implement is used to spank
-a spankee...
+The function that will be called when this =Implement= is used to
+=spank()= a =Spankee=...
 
 It's optional, but it's also the only way to run code when spanking
-with a particular implement.
+with a particular =Implement=.
