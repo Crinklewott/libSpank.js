@@ -20,9 +20,9 @@ libSpank has two publicly accessible constructor functions, a
 ** The Spankee Function
 This Constructor Function creates objects that represents a
 spankee. Spankees start out with a default of no pain, 10 protection,
-and 1000 tolerance.
+and 250 tolerance.
 
-This would be about the average configuration for someone with a medium
+This would be about the average configuration for someone with a high
 pain-tolerance wearing underwear and jeans, or some other equivalent
 clothing.
 
@@ -37,8 +37,8 @@ The spec object can have any of the following parameters:
 **** tolerance
 The pain =tolerance= of the =Spankee=. 100 is a low =tolerance=; it
 would only take a few sturdy smacks bring them over their pain
-=tolerance= and to tears... 750-1000 is probably about average... And
-2000+ is very likely the level most spankos have. (Quite high!)
+=tolerance= and to tears... 250-300 is probably about average... And
+1000+ is very likely the level most spankos have. (Quite high!)
 
 Having a high pain =tolerance= is not necessarily a good thing for the
 =Spankee= though, because it means that a spanking's pain will linger

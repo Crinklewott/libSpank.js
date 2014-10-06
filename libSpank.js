@@ -30,7 +30,7 @@ var Spankee = (function(){
       pain       = 0,    // The current level of pain
       lastSwat   = 1,    // How long ago the last slap was
       protection = 10,   // How protected is the butt?
-      toler      = 1000, // The pain tolerance of the spankee
+      toler      = 250,  // The pain tolerance of the spankee
       callback,          // Will be called with each swat's reaction
       timer,             // Timer object for temporal judgement
       hand = new Implement("Hand", 5, 1, function(){ // Default implement
