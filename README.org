@@ -206,7 +206,7 @@ much lower =sting=.
 *** Weight
 How heavy the =Implement= is... Since this library assumes that you
 are spanking at the same speed, this will increase =pain= a LOT if
-there is a high =sting= value, and not as much if the =stin=g is low
+there is a high =sting= value, and not as much if the =sting= is low
 to start out with.
 
 A hairbrush would be an example of a light =Implement=, and a wooden
